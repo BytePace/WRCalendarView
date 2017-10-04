@@ -9,7 +9,6 @@
 import UIKit
 
 class WREventCell: UICollectionViewCell {
-    @IBOutlet weak var borderView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
 
     override func awakeFromNib() {
@@ -51,7 +50,7 @@ class WREventCell: UICollectionViewCell {
     
     func updateColors() {
         contentView.backgroundColor = backgroundColorHighlighted(isSelected)
-        borderView.backgroundColor = borderColor()
+//        borderView.backgroundColor = borderColor()
         titleLabel.textColor = textColorHighlighted(isSelected)
     }
     
