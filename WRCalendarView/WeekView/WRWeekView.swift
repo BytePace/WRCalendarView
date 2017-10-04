@@ -67,7 +67,6 @@ public class WRWeekView: UIView {
         flowLayout.delegate = self
         
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: flowLayout)
-        collectionView.contentOffset = CGPoint.zero
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.isDirectionalLockEnabled = true
@@ -139,7 +138,7 @@ public class WRWeekView: UIView {
         components.hour = hour
         components.minute = minute
         
-        if collectionView.indexPathForItem(at: point2) == nil {
+        if collectionView.indexPathForItem(at: point2) == nil && point2.y > flowLayout.columnHeaderHeight {
             delegate?.tap(date: Calendar.current.date(from: components)!)
         }
     }

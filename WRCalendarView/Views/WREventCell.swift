@@ -26,15 +26,15 @@ public class WREventCell: UICollectionViewCell {
         
         updateColors()
     }
-
+    
     override public var isSelected: Bool {
         didSet {
             if isSelected && isSelected != oldValue {
                 UIView.animate(withDuration: TimeInterval(0.2), animations: { [unowned self] in
                     self.transform = CGAffineTransform.init(scaleX: 1.025, y: 1.025)
                     self.layer.shadowOpacity = 0.2
-                }, completion: { [unowned self] _ in
-                    self.transform = CGAffineTransform.identity
+                    }, completion: { [unowned self] _ in
+                        self.transform = CGAffineTransform.identity
                 })
             } else if isSelected {
                 layer.shadowOpacity = 0.2
@@ -49,27 +49,26 @@ public class WREventCell: UICollectionViewCell {
         didSet {
             if let event = event {
                 delegate.wrEventCellConfigure(cell: self, forEvent: event)
-//                titleLabel.text = event.title
             }
         }
     }
     
     func updateColors() {
-        contentView.backgroundColor = backgroundColorHighlighted(isSelected)
-//        borderView.backgroundColor = borderColor()
-        titleLabel.textColor = textColorHighlighted(isSelected)
+        //        contentView.backgroundColor = backgroundColorHighlighted(isSelected)
+        //        borderView.backgroundColor = borderColor()
+        titleLabel.textColor = UIColor.white
     }
     
-    func backgroundColorHighlighted(_ selected: Bool) -> UIColor {
-        let color = UIColor(red: 100/255, green: 150/255, blue: 207/255, alpha: 1)
-        return selected ? color : color.withAlphaComponent(0.1)
-    }
-    
-    func textColorHighlighted(_ selected: Bool) -> UIColor {
-        return selected ? UIColor.white : UIColor(hexString: "21729c")!
-    }
-    
-    func borderColor() -> UIColor {
-        return self.backgroundColorHighlighted(false).withAlphaComponent(1.0)
-    }
+    //    func backgroundColorHighlighted(_ selected: Bool) -> UIColor {
+    //        let color = event?.color ?? UIColor(red: 100/255, green: 150/255, blue: 207/255, alpha: 1)
+    //        return selected ? color.withAlphaComponent(0.1) : color
+    //    }
+    //
+    //    func textColorHighlighted(_ selected: Bool) -> UIColor {
+    //        return selected ? UIColor.white : UIColor(hexString: "21729c")!
+    //    }
+    //
+    //    func borderColor() -> UIColor {
+    //        return self.backgroundColorHighlighted(false).withAlphaComponent(1.0)
+    //    }
 }
