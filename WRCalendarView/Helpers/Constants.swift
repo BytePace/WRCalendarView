@@ -33,6 +33,7 @@ public enum ReuseIdentifiers {
 
 public enum CalendarType {
     case week
+    case threeDays
     case day
 }
 

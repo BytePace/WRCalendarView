@@ -32,6 +32,8 @@ public class WRWeekView: UIView {
     var calendarDate: Date!
     var events = [WREvent]()
     var eventBySection = [String: [WREvent]]()
+    var minHour = 6
+    var maxHour = 21
     
     public weak var delegate: WRWeekViewDelegate?
     
@@ -57,6 +59,8 @@ public class WRWeekView: UIView {
         dateFormatter.timeZone = TimeZone.current
         
         flowLayout = WRWeekViewFlowLayout()
+        flowLayout.minHour = minHour
+        flowLayout.maxHour = maxHour
         flowLayout.delegate = self
         
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: flowLayout)
@@ -203,6 +207,9 @@ public class WRWeekView: UIView {
             daysToShowOnScreen = 7
             let weekComponent = Calendar.current.dateComponents([.yearForWeekOfYear, .weekOfYear], from: calendarDate)
             startDate = Calendar.current.date(from: weekComponent)
+        case .threeDays:
+            daysToShowOnScreen = 3
+            startDate = calendarDate
         case .day:
             daysToShowOnScreen = 1
             startDate = calendarDate

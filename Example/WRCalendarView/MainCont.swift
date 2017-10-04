@@ -86,9 +86,18 @@ class MainCont: UIViewController {
         
         let secondCell = DropDownMenuCell()
         
-        secondCell.textLabel!.text = "Day"
+        secondCell.textLabel!.text = "Three days"
         secondCell.menuAction = #selector(choose(_:))
         secondCell.menuTarget = self
+        if currentChoice == "Three days" {
+            firstCell.accessoryType = .checkmark
+        }
+        
+        let thirdCell = DropDownMenuCell()
+        
+        thirdCell.textLabel!.text = "Day"
+        thirdCell.menuAction = #selector(choose(_:))
+        thirdCell.menuTarget = self
         if currentChoice == "Day" {
             firstCell.accessoryType = .checkmark
         }
@@ -130,6 +139,8 @@ class MainCont: UIViewController {
             switch titleView.title! {
             case "Week":
                 weekView.calendarType = .week
+            case "Three days":
+                weekView.calendarType = .threeDays
             case "Day":
                 weekView.calendarType = .day
             default:

@@ -15,7 +15,7 @@ protocol WRWeekViewFlowLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, layout: WRWeekViewFlowLayout, endTimeForItemAtIndexPath indexPath: IndexPath) -> Date
 }
 
-class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
+public class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
     typealias AttDic = Dictionary<IndexPath, UICollectionViewLayoutAttributes>
     
     // UI params
@@ -33,7 +33,10 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
     let minCellZ = 100      // Allows for 100 items in a section's background
     let minBackgroundZ = 0
     
-    var maxSectionHeight: CGFloat { return columnHeaderHeight + hourHeight * 24 }
+    public var minHour = 0
+    public var maxHour = 24
+    
+    var maxSectionHeight: CGFloat { return columnHeaderHeight + hourHeight * CGFloat(maxHour - minHour) }
     var currentTimeIndicatorSize: CGSize { return CGSize(width: rowHeaderWidth, height: 10.0) }
     let sectionMargin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     let cellMargin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -78,7 +81,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         initialize()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -106,13 +109,13 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     // MARK: - UICollectionViewLayout
-    override func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
+    override public func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
         invalidateLayoutCache()
         prepare()
         super.prepare(forCollectionViewUpdates: updateItems)
     }
     
-    override func finalizeCollectionViewUpdates() {
+    override public func finalizeCollectionViewUpdates() {
         for subview in collectionView!.subviews {
             for decorationViewClass in registeredDecorationClasses.values {
                 if subview.isKind(of: decorationViewClass) {
@@ -123,12 +126,12 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         collectionView!.reloadData()
     }
     
-    override func register(_ viewClass: AnyClass?, forDecorationViewOfKind elementKind: String) {
+    override public func register(_ viewClass: AnyClass?, forDecorationViewOfKind elementKind: String) {
         super.register(viewClass, forDecorationViewOfKind: elementKind)
         registeredDecorationClasses[elementKind] = viewClass
     }
     
-    override func prepare() {
+    override public func prepare() {
         super.prepare()
         
         if needsToPopulateAttributesForAllSections {
@@ -163,7 +166,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         let needsToPopulateVerticalGridlineAttributes = (verticalGridlineAttributes.count == 0)
         
         let sectionWidth = sectionMargin.left + self.sectionWidth + sectionMargin.right
-        let sectionHeight = nearbyint(hourHeight * 24 + sectionMargin.top + sectionMargin.bottom)
+        let sectionHeight = nearbyint(hourHeight * CGFloat(maxHour - minHour) + sectionMargin.top + sectionMargin.bottom)
         let calendarGridMinX = rowHeaderWidth + contentsMargin.left
         let calendarGridMinY = columnHeaderHeight + contentsMargin.top
         let calendarGridWidth = collectionViewContentSize.width - rowHeaderWidth - contentsMargin.left - contentsMargin.right
@@ -187,7 +190,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
             layoutAttributesForDecorationView(at: IndexPath(row: 0, section: 0),
                                               ofKind: DecorationViewKinds.currentTimeIndicator,
                                               withItemCache: currentTimeIndicatorAttributes)
-        let timeY = calendarContentMinX + nearbyint(CGFloat(currentTimeComponents.hour!) * hourHeight
+        let timeY = calendarContentMinX + nearbyint(CGFloat(currentTimeComponents.hour! - minHour) * hourHeight
             + CGFloat(currentTimeComponents.minute!) * minuteHeight)
         
         let currentTimeIndicatorMinY: CGFloat = timeY - nearbyint(currentTimeIndicatorSize.height / 2.0)
@@ -229,12 +232,12 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         attributes.zIndex = zIndexForElementKind(DecorationViewKinds.cornerHeader)
 
         // row header
-        for rowHeaderIndex in 0...23 {
+        for rowHeaderIndex in minHour...maxHour {
             (attributes, rowHeaderAttributes) =
                 layoutAttributesForSupplemantaryView(at: IndexPath(item: rowHeaderIndex, section: 0),
                                                      ofKind: SupplementaryViewKinds.rowHeader,
                                                      withItemCache: rowHeaderAttributes)
-            let rowHeaderMinY = calendarContentMinY + hourHeight * CGFloat(rowHeaderIndex) - nearbyint(hourHeight / 2.0)
+            let rowHeaderMinY = calendarContentMinY + hourHeight * CGFloat(rowHeaderIndex - minHour) - nearbyint(hourHeight / 2.0)
             attributes.frame = CGRect(x: rowHeaderMinX,
                                       y: rowHeaderMinY,
                                       width: rowHeaderWidth,
@@ -280,16 +283,17 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
             
             let itemStartTime = startTimeForIndexPath(itemIndexPath)
             let itemEndTime = endTimeForIndexPath(itemIndexPath)
-            let startHourY = CGFloat(itemStartTime.hour!) * hourHeight
+            let startHourY = CGFloat(itemStartTime.hour! - minHour) * hourHeight
             let startMinuteY = CGFloat(itemStartTime.minute!) * minuteHeight
             
             var endHourY: CGFloat
             let endMinuteY = CGFloat(itemEndTime.minute!) * minuteHeight
             
             if itemEndTime.day! != itemStartTime.day! {
-                endHourY = CGFloat(Calendar.current.maximumRange(of: .hour)!.count) * hourHeight + CGFloat(itemEndTime.hour!) * hourHeight
+                let maxRangeCount = Calendar.current.maximumRange(of: .hour)!.count
+                endHourY = CGFloat(maxRangeCount) * hourHeight + CGFloat(itemEndTime.hour!) * hourHeight
             } else {
-                endHourY = CGFloat(itemEndTime.hour!) * hourHeight
+                endHourY = CGFloat(itemEndTime.hour! - minHour) * hourHeight
             }
             
             let itemMinX = nearbyint(sectionX + cellMargin.left)
@@ -393,18 +397,18 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         return _gridlineIndex
     }
     
-    override var collectionViewContentSize: CGSize {
+    override public var collectionViewContentSize: CGSize {
         let size = CGSize(width: rowHeaderWidth + sectionWidth * CGFloat(collectionView!.numberOfSections),
                           height: maxSectionHeight)
         return size
     }
     
     // MARK: - Layout
-    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    override public func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return itemAttributes[indexPath]
     }
     
-    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    override public func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         switch elementKind {
         case SupplementaryViewKinds.columnHeader:
             return columnHeaderAttributes[indexPath]
@@ -415,7 +419,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
     
-    override func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    override public func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         switch elementKind {
         case DecorationViewKinds.verticalGridline:
             return verticalGridlineAttributes[indexPath]
@@ -588,7 +592,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         itemAttributes.removeAll()
     }
     
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override public func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         let visibleSections = NSMutableIndexSet()
         NSIndexSet.init(indexesIn: NSRange.init(location: 0, length: collectionView!.numberOfSections))
             .enumerate(_:) { (section: Int, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
@@ -602,7 +606,7 @@ class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         return allAttributes.filter({ rect.intersects($0.frame) })
     }
     
-    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+    override public func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }
     
