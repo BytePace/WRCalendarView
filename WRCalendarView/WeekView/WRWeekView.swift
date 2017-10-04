@@ -180,6 +180,13 @@ public class WRWeekView: UIView {
         flowLayout.invalidateLayoutCache()
         collectionView.reloadData()
     }
+    
+    public func getFirstAndLastVisibleDates() -> (Date, Date) {
+        if currentPage < 1 { currentPage = 1 }
+        let firstDate = flowLayout.dateForColumnHeader(at: IndexPath(row: 0, section: (currentPage - 1) * daysToShowOnScreen))
+        let lastDate = firstDate.addingTimeInterval(Double(daysToShowOnScreen * 86400))
+        return (firstDate, lastDate)
+    }
 
     // MARK: - private actions
     //  Get date from point
