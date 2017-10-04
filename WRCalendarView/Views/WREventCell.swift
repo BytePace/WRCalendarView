@@ -8,10 +8,15 @@
 
 import UIKit
 
-class WREventCell: UICollectionViewCell {
-    @IBOutlet weak var titleLabel: UILabel!
-
-    override func awakeFromNib() {
+public protocol WREventCellDelegate : class {
+    func wrEventCellConfigure(cell : WREventCell, forEvent : WREvent)
+}
+public class WREventCell: UICollectionViewCell {
+    weak var delegate : WREventCellDelegate!
+    @IBOutlet public weak var titleLabel: UILabel!
+    @IBOutlet public weak var centeredLabel: UILabel!
+    
+    override public func awakeFromNib() {
         super.awakeFromNib()
         
         layer.shadowColor = UIColor.black.cgColor
@@ -22,7 +27,7 @@ class WREventCell: UICollectionViewCell {
         updateColors()
     }
 
-    override var isSelected: Bool {
+    override public var isSelected: Bool {
         didSet {
             if isSelected && isSelected != oldValue {
                 UIView.animate(withDuration: TimeInterval(0.2), animations: { [unowned self] in
@@ -43,7 +48,8 @@ class WREventCell: UICollectionViewCell {
     var event: WREvent? {
         didSet {
             if let event = event {
-                titleLabel.text = event.title
+                delegate.wrEventCellConfigure(cell: self, forEvent: event)
+//                titleLabel.text = event.title
             }
         }
     }
@@ -55,7 +61,8 @@ class WREventCell: UICollectionViewCell {
     }
     
     func backgroundColorHighlighted(_ selected: Bool) -> UIColor {
-        return selected ? UIColor(hexString: "35b1f1")! : UIColor(hexString: "35b1f1")!.withAlphaComponent(0.1)
+        let color = UIColor(red: 100/255, green: 150/255, blue: 207/255, alpha: 1)
+        return selected ? color : color.withAlphaComponent(0.1)
     }
     
     func textColorHighlighted(_ selected: Bool) -> UIColor {

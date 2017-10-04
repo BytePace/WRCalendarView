@@ -31,18 +31,27 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOP-F7-dsy" customClass="ShrinkingLabel" customModule="WRCalendarView" customModuleProvider="target">
+                        <rect key="frame" x="87.5" y="76" width="9" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <constraints>
+                <constraint firstItem="WOP-F7-dsy" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="2Ts-ox-7XY"/>
                 <constraint firstItem="9OT-80-CyK" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Fta-qZ-9Dk"/>
                 <constraint firstAttribute="trailing" secondItem="9OT-80-CyK" secondAttribute="trailing" id="HIs-Le-EqD"/>
                 <constraint firstItem="SvP-El-S0W" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="4" id="Mw5-gB-kZ3"/>
                 <constraint firstItem="9OT-80-CyK" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Qh7-MZ-gUi"/>
                 <constraint firstItem="SvP-El-S0W" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="WvW-m1-gEG"/>
+                <constraint firstItem="WOP-F7-dsy" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="pIm-4M-vDR"/>
                 <constraint firstAttribute="trailing" secondItem="SvP-El-S0W" secondAttribute="trailing" constant="4" id="sYy-j0-Nye"/>
             </constraints>
             <size key="customSize" width="183" height="168"/>
             <connections>
+                <outlet property="centeredLabel" destination="WOP-F7-dsy" id="S8r-y7-eJj"/>
                 <outlet property="titleLabel" destination="SvP-El-S0W" id="oEn-93-BpK"/>
             </connections>
             <point key="canvasLocation" x="-32.5" y="113"/>

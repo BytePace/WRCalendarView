@@ -17,7 +17,8 @@ public protocol WRWeekViewDelegate: NSObjectProtocol  {
 
 public class WRWeekView: UIView {
     public var columnHeaderDelegate : WRColumnHeaderDelegate!
-    
+    public var eventCellDelegate : WREventCellDelegate!
+
     let pageCount = 7
     let dateFormatter = DateFormatter()
     
@@ -364,6 +365,7 @@ extension WRWeekView: UICollectionViewDelegate, UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReuseIdentifiers.defaultCell,
                                                       for: indexPath) as? WREventCell
+        cell?.delegate = eventCellDelegate
         guard cell != nil else { fatalError() }
         guard events != nil else { fatalError() }
         
