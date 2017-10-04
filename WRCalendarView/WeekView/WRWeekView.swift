@@ -188,7 +188,7 @@ public class WRWeekView: UIView {
                 diff = abs(flowLayout.hourGridDivisionValue.rawValue * index - minute)
             }
         }
-        return (hour - minHour, finalMinute)
+        return (hour + minHour, finalMinute)
     }
     
     fileprivate func groupEventsBySection() {
