@@ -8,48 +8,49 @@
 
 import UIKit
 import DateToolsSwift
+public protocol WRColumnHeaderDelegate : class {
+    func wrColumnHeaderConfigure(_ header : WRColumnHeader, forDate date: Date)
+    func wrColumnHeaderCrossButtonSelected(_ header : WRColumnHeader, forDate date: Date)
+}
 
-class WRColumnHeader: UICollectionReusableView {
-    @IBOutlet weak var dayLbl: UILabel!
-    @IBOutlet weak var weekdayLbl: UILabel!
+public class WRColumnHeader: UICollectionReusableView {
+    weak var delegate : WRColumnHeaderDelegate!
+
+    @IBOutlet public weak var dayLbl: UILabel!
+    @IBOutlet public weak var weekdayLbl: UILabel!
+    @IBOutlet public weak var crossButton: UIButton!
+    
     let calendar = Calendar.current
     let dateFormatter = DateFormatter()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-//        dateFormatter.locale = Locale(identifier: "en_US")
+    override public func awakeFromNib() {
+        super.awakeFromNib()        
     }
     
     var date: Date? {
         didSet {
             if let date = date {
-                let weekday = calendar.component(.weekday, from: date) - 1
-                
-                dayLbl.text = String(calendar.component(.day, from: date))
-                weekdayLbl.text = dateFormatter.shortWeekdaySymbols[weekday].uppercased()
-                weekdayLbl.textColor = UIColor(hexString: "333333")
-                
-                if date.isSameDay(date: Date()) {
-                    dayLbl.textColor = UIColor(hexString: "1398f2")
-                    backgroundColor = UIColor(hexString: "f5f8fd")
-                } else {
-                    switch weekday {
-                    case 0: // sunday
-                        dayLbl.textColor = UIColor(hexString: "fe4646")
-                    case 6:
-                        dayLbl.textColor = UIColor(hexString: "3573ff")
-                    default:
-                        dayLbl.textColor = UIColor(hexString: "aaaaaa")
-                    }
-                    backgroundColor = UIColor.white
-                }
+                delegate.wrColumnHeaderConfigure(self, forDate: date)
             }
         }
     }
     
-    override func prepareForReuse() {
+    @IBAction func crossButtonSelecte(_ sender: Any) {
+        delegate.wrColumnHeaderCrossButtonSelected(self, forDate: date!)
+    }
+    
+    override public func prepareForReuse() {
         super.prepareForReuse()
         dayLbl.text = ""
         weekdayLbl.text = ""
+    }
+}
+
+class ShrinkingLabel : UILabel {
+    override var intrinsicContentSize: CGSize {
+        if isHidden {
+            return .zero
+        }
+        return super.intrinsicContentSize
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F67a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -12,35 +12,63 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="WRColumnHeader" id="U6b-Vx-4bR" customClass="WRColumnHeader" customModule="WRCalendarView">
-            <rect key="frame" x="0.0" y="0.0" width="110" height="58"/>
+            <rect key="frame" x="0.0" y="0.0" width="110" height="67"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pLq-dm-tfe">
-                    <rect key="frame" x="28" y="7" width="54" height="26.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q9z-bN-EyV">
-                    <rect key="frame" x="41" y="38.5" width="28.5" height="13.5"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JFc-EB-lBn">
+                    <rect key="frame" x="0.0" y="0.0" width="110" height="36"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pLq-dm-tfe">
+                            <rect key="frame" x="0.0" y="2" width="110" height="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="35.5" placeholderIntrinsicHeight="17" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q9z-bN-EyV" customClass="ShrinkingLabel" customModule="WRCalendarView" customModuleProvider="target">
+                            <rect key="frame" x="38" y="19" width="35.5" height="17"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="pLq-dm-tfe" firstAttribute="centerX" secondItem="JFc-EB-lBn" secondAttribute="centerX" id="3gA-Qk-Amz"/>
+                        <constraint firstAttribute="trailing" secondItem="pLq-dm-tfe" secondAttribute="trailing" id="7hh-gS-pac"/>
+                        <constraint firstItem="pLq-dm-tfe" firstAttribute="top" secondItem="JFc-EB-lBn" secondAttribute="top" constant="2" id="MIz-qa-Lmf"/>
+                        <constraint firstItem="Q9z-bN-EyV" firstAttribute="centerX" secondItem="JFc-EB-lBn" secondAttribute="centerX" id="R6d-P6-ylN"/>
+                        <constraint firstAttribute="bottom" secondItem="Q9z-bN-EyV" secondAttribute="bottom" id="UHL-S9-dSN"/>
+                        <constraint firstItem="Q9z-bN-EyV" firstAttribute="top" secondItem="pLq-dm-tfe" secondAttribute="bottom" id="vBm-y2-KMa"/>
+                        <constraint firstItem="pLq-dm-tfe" firstAttribute="leading" secondItem="JFc-EB-lBn" secondAttribute="leading" id="zSu-eU-1zn"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="La2-Sw-N5A">
+                    <rect key="frame" x="47" y="38" width="16" height="27"/>
+                    <state key="normal" image="cross-mark"/>
+                    <connections>
+                        <action selector="crossButtonSelecte:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="Elr-Cl-AL8"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="pLq-dm-tfe" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="7" id="VOe-Mr-CKe"/>
-                <constraint firstItem="Q9z-bN-EyV" firstAttribute="centerX" secondItem="U6b-Vx-4bR" secondAttribute="centerX" id="haP-Ii-uD1"/>
-                <constraint firstItem="pLq-dm-tfe" firstAttribute="centerX" secondItem="U6b-Vx-4bR" secondAttribute="centerX" id="jHP-Ym-tbv"/>
-                <constraint firstAttribute="bottom" secondItem="Q9z-bN-EyV" secondAttribute="bottom" constant="6" id="mff-mn-Exd"/>
+                <constraint firstItem="La2-Sw-N5A" firstAttribute="centerX" secondItem="U6b-Vx-4bR" secondAttribute="centerX" id="4FO-yj-WWh"/>
+                <constraint firstItem="La2-Sw-N5A" firstAttribute="top" secondItem="JFc-EB-lBn" secondAttribute="bottom" constant="2" id="4SR-H9-hgd"/>
+                <constraint firstAttribute="bottom" secondItem="La2-Sw-N5A" secondAttribute="bottom" constant="2" id="7Ns-3r-mXf"/>
+                <constraint firstAttribute="trailing" secondItem="JFc-EB-lBn" secondAttribute="trailing" id="Hu9-5C-oEz"/>
+                <constraint firstItem="JFc-EB-lBn" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="Og5-Z1-mgO"/>
+                <constraint firstItem="JFc-EB-lBn" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="m9W-rz-9vP"/>
             </constraints>
             <connections>
-                <outlet property="dayLbl" destination="pLq-dm-tfe" id="ILg-f4-LCP"/>
-                <outlet property="weekdayLbl" destination="Q9z-bN-EyV" id="Xum-tF-49K"/>
+                <outlet property="crossButton" destination="La2-Sw-N5A" id="lxH-vg-Anq"/>
+                <outlet property="dayLbl" destination="Q9z-bN-EyV" id="Hl1-4v-rYE"/>
+                <outlet property="weekdayLbl" destination="pLq-dm-tfe" id="wsJ-kk-Vsy"/>
             </connections>
-            <point key="canvasLocation" x="-35" y="-139"/>
+            <point key="canvasLocation" x="-35" y="-134.5"/>
         </collectionReusableView>
     </objects>
+    <resources>
+        <image name="cross-mark" width="16" height="16"/>
+    </resources>
 </document>
