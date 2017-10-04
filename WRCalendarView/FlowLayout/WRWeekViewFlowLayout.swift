@@ -377,7 +377,7 @@ public class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
                                          startY calendarStartY: CGFloat, gridlineWidth: CGFloat) -> Int {
         var _gridlineIndex = gridlineIndex
         var attributes = UICollectionViewLayoutAttributes()
-        let numberOfDivisions = 60 / hourGridDivisionValue.rawValue
+        let numberOfDivisions = 60 / HourGridDivision.minutes_5.rawValue//hourGridDivisionValue.rawValue
         let divisionHeight = hourHeight / CGFloat(numberOfDivisions)
         
         for division in 1..<numberOfDivisions {

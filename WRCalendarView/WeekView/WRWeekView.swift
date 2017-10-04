@@ -211,14 +211,15 @@ public class WRWeekView: UIView {
         let adjustedY = y - flowLayout.columnHeaderHeight + collectionView.contentOffset.y - flowLayout.contentsMargin.top - flowLayout.sectionMargin.top
         let hour = Int(adjustedY / flowLayout.hourHeight)
         let minute = Int((adjustedY / flowLayout.hourHeight - CGFloat(hour)) * 60)
-        let numberOfDivisions = 60 / flowLayout.hourGridDivisionValue.rawValue
+        let gridDivision = HourGridDivision.minutes_5.rawValue //flowLayout.hourGridDivisionValue.rawValue
+        let numberOfDivisions = 60 / gridDivision
         var finalMinute: Int = minute
         var diff = Int.max
         
         for index in 0...numberOfDivisions {
-            if abs(flowLayout.hourGridDivisionValue.rawValue * index - minute) < diff {
-                finalMinute = flowLayout.hourGridDivisionValue.rawValue * index
-                diff = abs(flowLayout.hourGridDivisionValue.rawValue * index - minute)
+            if abs(gridDivision * index - minute) < diff {
+                finalMinute = gridDivision * index
+                diff = abs(gridDivision * index - minute)
             }
         }
         return (hour + minHour, finalMinute)
