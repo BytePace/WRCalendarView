@@ -66,6 +66,7 @@ public class WRWeekView: UIView {
         flowLayout.delegate = self
         
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: flowLayout)
+        collectionView.contentOffset = CGPoint.zero
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.isDirectionalLockEnabled = true
