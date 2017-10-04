@@ -93,7 +93,7 @@ public class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         hourHeight = 50
         rowHeaderWidth = 50
         columnHeaderHeight = 50
-        hourGridDivisionValue = .minutes_20
+        hourGridDivisionValue = .none
         
         initializeMinuteTick()
     }
@@ -364,7 +364,7 @@ public class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
             attributes.zIndex = zIndexForElementKind(DecorationViewKinds.horizontalGridline)
             horizontalGridlineIndex += 1
             
-            if hourGridDivisionValue.rawValue > 0 {
+            if let division = hourGridDivisionValue, division.rawValue > 0 {
                 horizontalGridlineIndex = drawHourDividersAtGridLineIndex(horizontalGridlineIndex, hour: hour,
                                                                           startX: horizontalGridlineMinX,
                                                                           startY: horizontalGridlineMinY,
