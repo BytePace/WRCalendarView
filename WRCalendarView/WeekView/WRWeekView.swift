@@ -154,6 +154,20 @@ public class WRWeekView: UIView {
         forceReload(true)
     }
     
+    public func removeEvent(event: WREvent) -> Bool {
+        guard let index = events.index(where: { (e) -> Bool in
+            return event == e
+        }) else { return false }
+        events.remove(at: index)
+        forceReload(true)
+        return true
+    }
+    
+    public func removeAllEvents() {
+        events.removeAll()
+        forceReload(true)
+    }
+    
     public func addEvents(events: [WREvent]) {
         self.events.append(contentsOf: events)
         forceReload(true)
