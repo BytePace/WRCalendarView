@@ -19,4 +19,12 @@ open class WREvent: TimePeriod {
         
         return event
     }
+    
+    public init(beginning: Date?, end: Date?, title: String, id: String) {
+        self.beginning = beginning
+        self.end = end
+        self.title = title
+        self.id = id
+    }
+
 }
