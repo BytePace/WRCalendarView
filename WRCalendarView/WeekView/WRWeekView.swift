@@ -35,7 +35,11 @@ public class WRWeekView: UIView {
     var calendarDate: Date!
     var events = [WREvent]()
     var eventBySection = [String: [WREvent]]()
-    var minHour = 6
+    public var minHour = 6 {
+        didSet {
+            flowLayout.minHour = minHour
+        }
+    }
     var maxHour = 21
     
     public weak var delegate: WRWeekViewDelegate?
@@ -138,8 +142,10 @@ public class WRWeekView: UIView {
         components.hour = hour
         components.minute = minute
         
-        if collectionView.indexPathForItem(at: point2) == nil && point2.y > flowLayout.columnHeaderHeight {
-            delegate?.tap(date: Calendar.current.date(from: components)!)
+        if let _ = collectionView.indexPathForItem(at: point2) {} else {
+            if point2.y > flowLayout.columnHeaderHeight {
+                delegate?.tap(date: Calendar.current.date(from: components)!)
+            }
         }
     }
     
