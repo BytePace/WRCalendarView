@@ -128,13 +128,16 @@ public class WRWeekView: UIView {
     
     func tapHandler(_ recognizer: UITapGestureRecognizer) {
         let point = recognizer.location(in: self)
-        
+        let point2 = recognizer.location(in: collectionView)
+
         var components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: getDateForX(point.x))
         let (hour, minute) = getDateForY(point.y)
         components.hour = hour
         components.minute = minute
         
-        delegate?.tap(date: Calendar.current.date(from: components)!)
+        if collectionView.indexPathForItem(at: point2) == nil {
+            delegate?.tap(date: Calendar.current.date(from: components)!)
+        }
     }
     
     // MARK: - public actions
