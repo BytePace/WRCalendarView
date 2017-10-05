@@ -678,9 +678,12 @@ public class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     // MARK: - Dates
-    func dateForTimeRowHeader(at indexPath: IndexPath) -> Date {
+    func dateForTimeRowHeader(at indexPath: IndexPath) -> Date? {
         var components = daysForSection(indexPath.section)
         components.hour = indexPath.item
+        if components.hour == maxHour || components.hour == minHour {
+            return nil
+        }
         return Calendar.current.date(from: components)!
     }
     
