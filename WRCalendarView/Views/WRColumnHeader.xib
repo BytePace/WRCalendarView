@@ -15,16 +15,16 @@
             <rect key="frame" x="0.0" y="0.0" width="110" height="67"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JFc-EB-lBn">
+                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JFc-EB-lBn">
                     <rect key="frame" x="0.0" y="0.0" width="110" height="36"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pLq-dm-tfe">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pLq-dm-tfe">
                             <rect key="frame" x="0.0" y="2" width="110" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="35.5" placeholderIntrinsicHeight="17" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q9z-bN-EyV" customClass="ShrinkingLabel" customModule="WRCalendarView" customModuleProvider="target">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" placeholderIntrinsicWidth="35.5" placeholderIntrinsicHeight="17" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q9z-bN-EyV" customClass="ShrinkingLabel" customModule="WRCalendarView" customModuleProvider="target">
                             <rect key="frame" x="38" y="19" width="35.5" height="17"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -43,9 +43,8 @@
                         <constraint firstItem="pLq-dm-tfe" firstAttribute="leading" secondItem="JFc-EB-lBn" secondAttribute="leading" id="zSu-eU-1zn"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="La2-Sw-N5A">
-                    <rect key="frame" x="47" y="38" width="16" height="27"/>
-                    <state key="normal" image="cross-mark"/>
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="La2-Sw-N5A">
+                    <rect key="frame" x="40" y="38" width="30" height="27"/>
                     <connections>
                         <action selector="crossButtonSelecte:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="Elr-Cl-AL8"/>
                     </connections>
@@ -68,7 +67,4 @@
             <point key="canvasLocation" x="-35" y="-134.5"/>
         </collectionReusableView>
     </objects>
-    <resources>
-        <image name="cross-mark" width="16" height="16"/>
-    </resources>
 </document>
