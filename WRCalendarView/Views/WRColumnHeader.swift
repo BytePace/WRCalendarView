@@ -46,11 +46,4 @@ public class WRColumnHeader: UICollectionReusableView {
     }
 }
 
-class ShrinkingLabel : UILabel {
-    override var intrinsicContentSize: CGSize {
-        if isHidden {
-            return .zero
-        }
-        return super.intrinsicContentSize
-    }
-}
+class ShrinkingLabel : UILabel {}
