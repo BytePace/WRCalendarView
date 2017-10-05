@@ -167,9 +167,9 @@ public class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         
         let sectionWidth = sectionMargin.left + self.sectionWidth + sectionMargin.right
         let sectionHeight = nearbyint(hourHeight * CGFloat(maxHour - minHour) + sectionMargin.top + sectionMargin.bottom)
-        let calendarGridMinX = rowHeaderWidth + contentsMargin.left
+//        let calendarGridMinX = rowHeaderWidth + contentsMargin.left
         let calendarGridMinY = columnHeaderHeight + contentsMargin.top
-        let calendarGridWidth = collectionViewContentSize.width - rowHeaderWidth - contentsMargin.left - contentsMargin.right
+//        let calendarGridWidth = collectionViewContentSize.width - rowHeaderWidth - contentsMargin.left - contentsMargin.right
 
         let calendarContentMinX = rowHeaderWidth + contentsMargin.left + sectionMargin.left
         let calendarContentMinY = columnHeaderHeight + contentsMargin.top + sectionMargin.top
@@ -185,32 +185,19 @@ public class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
                                   width: rowHeaderWidth, height: collectionView!.frame.height)
         attributes.zIndex = zIndexForElementKind(DecorationViewKinds.rowHeaderBackground)
 
-        //current time indicator
-        (attributes, currentTimeIndicatorAttributes) =
-            layoutAttributesForDecorationView(at: IndexPath(row: 0, section: 0),
-                                              ofKind: DecorationViewKinds.currentTimeIndicator,
-                                              withItemCache: currentTimeIndicatorAttributes)
         let timeY = calendarContentMinX + nearbyint(CGFloat(currentTimeComponents.hour! - minHour) * hourHeight
-            + CGFloat(currentTimeComponents.minute!) * minuteHeight)
-        
-        let currentTimeIndicatorMinY: CGFloat = timeY - nearbyint(currentTimeIndicatorSize.height / 2.0)
-        let currentTimeIndicatorMinX: CGFloat = (max(collectionView!.contentOffset.x, 0.0) + (rowHeaderWidth - currentTimeIndicatorSize.width))
-        attributes.frame = CGRect(origin: CGPoint(x: currentTimeIndicatorMinX, y: currentTimeIndicatorMinY),
-                                                      size: currentTimeIndicatorSize)
-        attributes.zIndex = zIndexForElementKind(DecorationViewKinds.currentTimeIndicator)
-        
-        //current time gridline
-        (attributes, currentTimeHorizontalGridlineAttributes) =
-            layoutAttributesForDecorationView(at: IndexPath(row: 0, section: 0),
-                                              ofKind: DecorationViewKinds.currentTimeGridline,
-                                              withItemCache: currentTimeHorizontalGridlineAttributes)
-        let currentTimeHorizontalGridlineMinY = timeY - nearbyint(gridThickness / 2.0)
-        let currentTimeHorizontalGridlineXOffset = calendarGridMinX + sectionMargin.left
-        let currentTimeHorizontalGridlineMinX = max(currentTimeHorizontalGridlineXOffset, collectionView!.contentOffset.x + currentTimeHorizontalGridlineXOffset)
-        let currentTimehorizontalGridlineWidth = min(calendarGridWidth, collectionView!.frame.size.width)
-        attributes.frame = CGRect(x: currentTimeHorizontalGridlineMinX, y: currentTimeHorizontalGridlineMinY,
-                                  width: currentTimehorizontalGridlineWidth, height: gridThickness);
-        attributes.zIndex = zIndexForElementKind(DecorationViewKinds.currentTimeGridline)
+                    + CGFloat(currentTimeComponents.minute!) * minuteHeight)
+        //current time indicator
+//        (attributes, currentTimeIndicatorAttributes) =
+//            layoutAttributesForDecorationView(at: IndexPath(row: 0, section: 0),
+//                                              ofKind: DecorationViewKinds.currentTimeIndicator,
+//                                              withItemCache: currentTimeIndicatorAttributes)
+//
+//        let currentTimeIndicatorMinY: CGFloat = timeY - nearbyint(currentTimeIndicatorSize.height / 2.0)
+//        let currentTimeIndicatorMinX: CGFloat = (max(collectionView!.contentOffset.x, 0.0) + (rowHeaderWidth - currentTimeIndicatorSize.width))
+//        attributes.frame = CGRect(origin: CGPoint(x: currentTimeIndicatorMinX, y: currentTimeIndicatorMinY),
+//                                                      size: currentTimeIndicatorSize)
+//        attributes.zIndex = zIndexForElementKind(DecorationViewKinds.currentTimeIndicator)
         
         // column header background
         (attributes, columnHeaderBackgroundAttributes) =
@@ -258,7 +245,7 @@ public class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
             attributes.frame = CGRect(x: sectionMinX, y: columnHeaderMinY,
                                       width: sectionWidth, height: columnHeaderHeight)
             attributes.zIndex = zIndexForElementKind(SupplementaryViewKinds.columnHeader)
-            
+
             if needsToPopulateVerticalGridlineAttributes {
                 layoutVerticalGridLinesAttributes(section: section, sectionX: sectionMinX, calendarGridMinY: calendarGridMinY, sectionHeight: sectionHeight)
                 layoutTodayBackgroundAttributes(section: section, sectionX: sectionMinX, calendarStartY: calendarGridMinY, sectionHeight: sectionHeight)
@@ -267,6 +254,9 @@ public class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
             if needsToPopulateItemAttributes {
                 layoutItemsAttributes(section: section, sectionX: sectionMinX, calendarStartY: calendarGridMinY)
             }
+            //current time horizontal grid line
+            let currentTimeHorizontalGridlineMinY = timeY - nearbyint(gridThickness / 2.0)
+            layoutCurrentTimeGridLineAttributes(Y: currentTimeHorizontalGridlineMinY, section: section, sectionX: sectionMinX, calendarStartY: calendarGridMinY, sectionHeight: sectionHeight)
         }
         layoutHorizontalGridLinesAttributes(calendarStartX: calendarContentMinX, calendarStartY: calendarContentMinY)
     }
@@ -325,6 +315,24 @@ public class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
                                                   withItemCache: todayBackgroundAttributes)
             attributes.frame = CGRect(x: sectionX, y: 0, width: sectionWidth, height: sectionHeight + calendarStartY)
             attributes.zIndex = zIndexForElementKind(DecorationViewKinds.todayBackground)
+        }
+    }
+    
+    func layoutCurrentTimeGridLineAttributes(Y : CGFloat, section: Int, sectionX: CGFloat, calendarStartY: CGFloat, sectionHeight: CGFloat) {
+        let currentComponents = daysForSection(section)
+
+        if (currentTimeComponents.year == currentComponents.year &&
+            currentTimeComponents.month == currentComponents.month &&
+            currentTimeComponents.day == currentComponents.day) {
+            //current time gridline
+            var attributes: UICollectionViewLayoutAttributes
+
+            (attributes, currentTimeHorizontalGridlineAttributes) =
+                layoutAttributesForDecorationView(at: IndexPath(row: 0, section: 0),
+                                                  ofKind: DecorationViewKinds.currentTimeGridline,
+                                                  withItemCache: currentTimeHorizontalGridlineAttributes)
+            attributes.frame = CGRect(x: sectionX, y: Y, width: sectionWidth, height: gridThickness)
+            attributes.zIndex = zIndexForElementKind(DecorationViewKinds.currentTimeGridline)
         }
     }
     
