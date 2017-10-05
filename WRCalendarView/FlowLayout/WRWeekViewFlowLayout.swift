@@ -709,7 +709,7 @@ public class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
         case DecorationViewKinds.columnHeaderBackground:
             return minOverlayZ + 5
         case DecorationViewKinds.currentTimeGridline:
-            return minBackgroundZ + 4
+            return minCellZ + 4
         case DecorationViewKinds.horizontalGridline:
             return minBackgroundZ + 3
         case DecorationViewKinds.verticalGridline:
