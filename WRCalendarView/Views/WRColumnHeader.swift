@@ -20,11 +20,17 @@ public class WRColumnHeader: UICollectionReusableView {
     @IBOutlet public weak var weekdayLbl: UILabel!
     @IBOutlet public weak var crossButton: UIButton!
     
+    @IBOutlet public weak var weekdayLabelTopConstraint : NSLayoutConstraint!
+    @IBOutlet public weak var crossButtonHeightConstraint : NSLayoutConstraint!
+
+    
     let calendar = Calendar.current
     let dateFormatter = DateFormatter()
     
     override public func awakeFromNib() {
-        super.awakeFromNib()        
+        super.awakeFromNib()
+        layer.borderWidth = 1 / UIScreen.main.scale
+        layer.borderColor = UIColor(hexString: "dadada")?.cgColor
     }
     
     var date: Date? {

@@ -42,6 +42,15 @@ public class WRWeekView: UIView {
     }
     var maxHour = 21
     
+    public var columnHeaderHeight : CGFloat {
+        get {
+            return flowLayout.columnHeaderHeight
+        }
+        set {
+            flowLayout.columnHeaderHeight = newValue
+        }
+    }
+    
     public weak var delegate: WRWeekViewDelegate?
     
     public var calendarType: CalendarType = .week {
