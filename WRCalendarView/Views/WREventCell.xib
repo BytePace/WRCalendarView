@@ -46,6 +46,7 @@
                 <constraint firstItem="SvP-El-S0W" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="4" id="Mw5-gB-kZ3"/>
                 <constraint firstItem="9OT-80-CyK" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Qh7-MZ-gUi"/>
                 <constraint firstItem="SvP-El-S0W" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="WvW-m1-gEG"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="SvP-El-S0W" secondAttribute="bottom" id="col-VK-t2P"/>
                 <constraint firstItem="WOP-F7-dsy" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="pIm-4M-vDR"/>
                 <constraint firstAttribute="trailing" secondItem="SvP-El-S0W" secondAttribute="trailing" constant="4" id="sYy-j0-Nye"/>
             </constraints>
