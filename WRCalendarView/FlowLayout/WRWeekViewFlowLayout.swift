@@ -185,7 +185,7 @@ public class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
                                   width: rowHeaderWidth, height: collectionView!.frame.height)
         attributes.zIndex = zIndexForElementKind(DecorationViewKinds.rowHeaderBackground)
 
-        let timeY = calendarContentMinX + nearbyint(CGFloat(currentTimeComponents.hour! - minHour) * hourHeight
+        let timeY = calendarContentMinY + nearbyint(CGFloat(currentTimeComponents.hour! - minHour) * hourHeight
                     + CGFloat(currentTimeComponents.minute!) * minuteHeight)
         //current time indicator
 //        (attributes, currentTimeIndicatorAttributes) =
