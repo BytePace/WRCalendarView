@@ -38,6 +38,8 @@ public class WRWeekView: UIView {
     public var minHour = 6 {
         didSet {
             flowLayout.minHour = minHour
+            flowLayout.invalidateLayoutCache()
+            flowLayout.invalidateLayout()
         }
     }
     var maxHour = 21
