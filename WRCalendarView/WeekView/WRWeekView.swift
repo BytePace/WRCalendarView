@@ -179,7 +179,7 @@ public class WRWeekView: UIView {
     
     public func removeEvent(event: WREvent) -> Bool {
         guard let index = events.index(where: { (e) -> Bool in
-            return event == e
+            return event.id == e.id
         }) else { return false }
         events.remove(at: index)
         forceReload(true)
