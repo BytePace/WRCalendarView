@@ -299,7 +299,7 @@ public class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
             sectionItemAttributes.append(attributes)
         }
         
-   //TODO: need to fix logic for that     adjustItemsForOverlap(sectionItemAttributes, inSection: section, sectionMinX: sectionX)
+        adjustItemsForOverlap(sectionItemAttributes, inSection: section, sectionMinX: sectionX)
     }
     
     func layoutTodayBackgroundAttributes(section: Int, sectionX: CGFloat, calendarStartY: CGFloat, sectionHeight: CGFloat) {
@@ -506,7 +506,7 @@ public class WRWeekViewFlowLayout: UICollectionViewFlowLayout {
             
             overlappingItems.append(contentsOf: sectionItemAttributes.filter {
                 if $0 != itemAttributes {
-                    return itemFrame.intersects($0.frame)
+                    return itemFrame.intersects($0.frame) && itemFrame.height > 0
                 } else {
                     return false
                 }
